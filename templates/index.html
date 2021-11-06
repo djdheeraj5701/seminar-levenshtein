@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Seminar</title>
+    <style>
+
+    /* Create two equal columns that floats next to each other */
+    .column1 {
+      float: left;
+      width: 30%;
+    }
+    .column2 {
+      float: left;
+      width: 70%;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    button {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 50%;
+    }
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    </style>
+    </head>
+    <body>
+        <h1>{{o.title}}</h1>
+        <div class="row">
+          <div class="column1">
+<!--            <a href="{{url_for('display')}}">-->
+<!--                <button style="background-color: {{o.loaded}}">-->
+<!--                Load-->
+<!--                </button>-->
+<!--            </a><br><br>-->
+            <a href="{{url_for('worst')}}">
+                <button >
+                Worst
+                </button>
+            </a><br><br>
+            <a href="{{url_for('better')}}">
+                <button >
+                Better
+                </button>
+            </a><br><br>
+            <a href="{{url_for('best')}}">
+                <button >
+                Best
+                </button>
+            </a><br><br>
+            <a href="{{url_for('compare')}}">
+                <button >
+                Compare
+                </button>
+            </a><br><br>
+            <a href="{{url_for('display')}}">
+                <button >
+                Display
+                </button>
+            </a><br><br>
+          </div>
+            {% if o.perform %}
+          <div class="column2">
+            <form action="{{url_for(o.operation)}}" method="POST">
+                <input type="text" name="word"><br><br>
+                <input type="submit">
+            </form><br>
+            <p>Found {{o.matches}} in {{o.time_gap}}</p>
+          </div>
+            {% endif %}
+            {% if o.compare %}
+          <div class="column2">
+              <img src="/static/compare.png"
+                   alt="Comparison graph"
+              >
+          </div>
+            {% endif %}
+            {% if o.display %}
+        <div class="column2">
+            <div>
+                <table>
+                    <tr>
+                        {% for header in o.headers %}
+                        <th>
+                            {{header}}
+                        </th>
+                        {% endfor %}
+                    </tr>
+                    {% for record in o.records %}
+                    <tr>
+                        {% for item in record %}
+                        <td>{{item}}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+            {% endif %}
+        </div>
+    </body>
+</html>
