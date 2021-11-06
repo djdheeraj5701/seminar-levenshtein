@@ -1,1 +1,1 @@
-# seminar-levenshtein
+# seminar-spellcheck
